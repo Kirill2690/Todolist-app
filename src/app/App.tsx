@@ -36,7 +36,7 @@ function App({demo = false}: PropsType) {
                         <Menu/>
                     </IconButton>
                     <Typography variant="h6">
-                        News
+                        Todolist-App
                     </Typography>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
