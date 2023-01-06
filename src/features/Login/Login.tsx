@@ -8,11 +8,11 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from "formik";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {loginTC} from "./auth-reducer";
-import {AppRootStateType} from "../../app/store";
+import {AppRootStateType, useAppDispatch} from "../../app/store";
 import {Navigate} from "react-router-dom";
-import {ROOTS} from "../../app/App";
+
 
 type FormikErrorType = {
     email?: string
@@ -27,7 +27,7 @@ export type LoginDataType = {
 }
 export const Login = () => {
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn)
     const formik = useFormik({
         initialValues: {
@@ -61,17 +61,17 @@ export const Login = () => {
     }
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>
-                <FormControl>
-                    <FormLabel>
-                        <p>If you are using Safari</p>
-                        <p>please disable Cross-Origin Restrictions</p>
-                        <p>{`Preferences >> Advanced, and select`}</p>
-                        <p>'Disable Cross-Origin Restrictions'</p>
-                        <p>To log in use common test account credentials:</p>
-                        <p><b>Email: </b>free@samuraijs.com</p>
-                        <p><b>Password:</b> free</p>
-                    </FormLabel>
-                    <form onSubmit={formik.handleSubmit}>
+            <FormControl>
+                <FormLabel>
+                    <p>If you are using Safari</p>
+                    <p>please disable Cross-Origin Restrictions</p>
+                    <p>{`Preferences >> Advanced, and select`}</p>
+                    <p>'Disable Cross-Origin Restrictions'</p>
+                    <p>To log in use common test account credentials:</p>
+                    <p><b>Email: </b>free@samuraijs.com</p>
+                    <p><b>Password:</b> free</p>
+                </FormLabel>
+                <form onSubmit={formik.handleSubmit}>
                     <FormGroup>
                         <TextField label="Email"
                                    type="email"
@@ -95,8 +95,8 @@ export const Login = () => {
                             Login
                         </Button>
                     </FormGroup>
-                    </form>
-                </FormControl>
+                </form>
+            </FormControl>
         </Grid>
     </Grid>
 }

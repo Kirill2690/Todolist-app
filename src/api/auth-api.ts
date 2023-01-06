@@ -1,5 +1,5 @@
 import {AxiosResponse} from "axios";
-import {instance, LoginParamsType, ResponseType} from "./todolists-api";
+import {instance, ResponseType} from "./todolists-api";
 
 export const authAPI = {
     login(data: LoginParamsType) {
@@ -11,4 +11,12 @@ export const authAPI = {
     logout() {
         return instance.delete<ResponseType>('/auth/login');
     }
+}
+
+
+export type LoginParamsType = {
+    email: string
+    password: string
+    rememberMe?: boolean
+    captcha?: string
 }

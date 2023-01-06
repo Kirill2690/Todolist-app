@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import './App.css'
 import {TodolistsList} from '../features/TodolistsList/TodolistsList'
 import {useDispatch} from 'react-redux'
-import {useAppSelector} from './store'
+import {useAppDispatch, useAppSelector} from './store'
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -29,7 +29,7 @@ export enum ROOTS {
 
 function App({demo = false}: PropsType) {
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const status = useAppSelector((state) => state.app.status)
     const isInitialized = useAppSelector((state) => state.app.isInitialized)
     const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn)

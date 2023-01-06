@@ -44,13 +44,18 @@ export type TodolistType = {
     addedDate: string
     order: number
 }
+export type ResponseType<D = {}> = {
+    resultCode: number
+    messages: Array<string>
+    fieldsErrors: Array<string>
+    data: D
+}
 
-
-export type ResponseType<T = {}> = {
-    messages: string[];
-    fieldsErrors: string[];
-    resultCode: number;
-    data: T;
+export type LoginParamsType = {
+    email: string
+    password: string
+    rememberMe?: boolean
+    captcha?: string
 }
 
 export enum TaskStatuses {
@@ -68,12 +73,6 @@ export enum TaskPriorities {
     Later = 4
 }
 
-export enum Result_Code {
-    OK,
-    ERROR,
-    CAPTCHA
-}
-
 export type TaskType = {
     description: string
     title: string
@@ -86,7 +85,6 @@ export type TaskType = {
     order: number
     addedDate: string
 }
-
 export type UpdateTaskModelType = {
     title: string
     description: string
@@ -95,16 +93,11 @@ export type UpdateTaskModelType = {
     startDate: string
     deadline: string
 }
-
 type GetTasksResponse = {
     error: string | null
     totalCount: number
     items: TaskType[]
 }
 
-export type LoginParamsType = {
-    email: string
-    password: string
-    rememberMe?: boolean
-    captcha?: string
-}
+
+
