@@ -56,15 +56,22 @@ export const Login = () => {
     })
 
     if (isLoggedIn) {
-        return <Navigate to={ROOTS.DEFAULT}/>
+        return <Navigate to={'/'}/>
 
     }
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>
-            <form onSubmit={formik.handleSubmit}>
                 <FormControl>
                     <FormLabel>
+                        <p>If you are using Safari</p>
+                        <p>please disable Cross-Origin Restrictions</p>
+                        <p>{`Preferences >> Advanced, and select`}</p>
+                        <p>'Disable Cross-Origin Restrictions'</p>
+                        <p>To log in use common test account credentials:</p>
+                        <p><b>Email: </b>free@samuraijs.com</p>
+                        <p><b>Password:</b> free</p>
                     </FormLabel>
+                    <form onSubmit={formik.handleSubmit}>
                     <FormGroup>
                         <TextField label="Email"
                                    type="email"
@@ -88,8 +95,8 @@ export const Login = () => {
                             Login
                         </Button>
                     </FormGroup>
+                    </form>
                 </FormControl>
-            </form>
         </Grid>
     </Grid>
 }
