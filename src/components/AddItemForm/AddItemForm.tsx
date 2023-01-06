@@ -6,14 +6,19 @@ import {AddBox} from '@mui/icons-material';
 type AddItemFormPropsType = {
     addItem: (title: string) => void
     disabled?: boolean
+    placeholder?: string
 }
 
-export const AddItemForm = React.memo(function ({addItem, disabled = false}: AddItemFormPropsType) {
+export const AddItemForm = React.memo(function ({placeholder, addItem, disabled = false}: AddItemFormPropsType) {
 
     let [title, setTitle] = useState('')
     let [error, setError] = useState<string | null>(null)
 
     const addItemHandler = () => {
+        if (title.length >= 100) {
+            setError('max text length is 100 symbols')
+            return
+        }
         if (title.trim() !== '') {
             addItem(title);
             setTitle('');
@@ -42,8 +47,9 @@ export const AddItemForm = React.memo(function ({addItem, disabled = false}: Add
                    value={title}
                    onChange={onChangeHandler}
                    onKeyPress={onKeyPressHandler}
-                   label="Title"
+                   label={placeholder}
                    helperText={error}
+                   placeholder={placeholder}
         />
         <IconButton color="primary" onClick={addItemHandler} disabled={disabled}>
             <AddBox/>

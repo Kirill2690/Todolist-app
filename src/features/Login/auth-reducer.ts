@@ -1,13 +1,13 @@
 import {Dispatch} from 'redux'
 import {SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from '../../app/app-reducer'
-import {LoginDataType} from "./Login";
-import {authAPI, Result_Code} from "../../api/todolists-api";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
+import axios from "axios";
+import {authAPI} from "../../api/auth-api";
 
 const initialState = {
     isLoggedIn: false
 }
-type InitialStateType = typeof initialState
+
 
 export const authReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
@@ -22,23 +22,40 @@ export const setIsLoggedInAC = (value: boolean) =>
     ({type: 'login/SET-IS-LOGGED-IN', value} as const)
 
 // thunks
-export const loginTC = (data: LoginDataType) => async (dispatch: Dispatch<ActionsType>) => {
+export const loginTC = (data:any) => async (dispatch: Dispatch<ActionsType>) => {
     dispatch(setAppStatusAC('loading'))
-    const response = await authAPI.login(data)
     try {
-        if (response.data.resultCode === Result_Code.OK) {
+        const res = await authAPI.login(data)
+        if (res.data.resultCode === 0) {
             dispatch(setIsLoggedInAC(true))
             dispatch(setAppStatusAC('succeeded'))
         } else {
-            handleServerAppError(response.data, dispatch)
+            handleServerAppError(res.data, dispatch)
         }
-
     } catch (e) {
-        handleServerNetworkError(e as { message: string }, dispatch)
+        if (axios.isAxiosError(e)) {
+            handleServerNetworkError(e, dispatch)
+        }
     }
-
-
 }
 
+export const logoutTC = () => (dispatch: Dispatch) => {
+    dispatch(setAppStatusAC('loading'))
+    authAPI.logout()
+        .then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(setIsLoggedInAC(false))
+                dispatch(setAppStatusAC('succeeded'))
+            } else {
+                handleServerAppError(res.data, dispatch)
+            }
+        })
+        .catch((error) => {
+            handleServerNetworkError(error, dispatch)
+        })
+}
+
+
 // types
+type InitialStateType = typeof initialState
 type ActionsType = ReturnType<typeof setIsLoggedInAC> | SetAppStatusActionType | SetAppErrorActionType

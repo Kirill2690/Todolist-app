@@ -26,6 +26,7 @@ export type LoginDataType = {
     rememberMe: boolean
 }
 export const Login = () => {
+
     const dispatch = useDispatch()
     const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn)
     const formik = useFormik({
@@ -48,7 +49,7 @@ export const Login = () => {
             }
             return errors
         },
-        onSubmit: (values: LoginDataType) => {
+        onSubmit: values => {
             dispatch(loginTC(values))
             formik.resetForm()
         },
@@ -65,7 +66,6 @@ export const Login = () => {
                     <FormLabel>
                     </FormLabel>
                     <FormGroup>
-
                         <TextField label="Email"
                                    type="email"
                                    margin="normal"
